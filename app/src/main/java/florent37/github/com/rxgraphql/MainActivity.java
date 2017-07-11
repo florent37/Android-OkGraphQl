@@ -65,25 +65,54 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void query() {
-        rxGraphQl.query(
-                "weatherForecast(city:@city) {" +
-                        "city {" +
-                        "      id," +
-                        "      population," +
-                        "      name," +
-                        "      country," +
-                        "      coord{" +
-                        "        lon," +
-                        "        lat" +
-                        "      }" +
-                        "   }" +
-                        "}"
-        )
+        rxGraphQl
+                .query(
+                        "weatherForecast(city:@city) {" +
+                                "city {" +
+                                "      id," +
+                                "      population," +
+                                "      name," +
+                                "      country," +
+                                "      coord{" +
+                                "        lon," +
+                                "        lat" +
+                                "      }" +
+                                "   }" +
+                                "}"
+                )
+
                 .cast(WeatherForecastResponse.class)
                 .field("city", "Seattle")
                 .toSingle()
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSuccess(data -> Log.d(TAG, data.toString()))
+                .subscribe(
+                        data -> textView.setText(data.toString()),
+                        throwable -> textView.setText(throwable.getLocalizedMessage())
+                );
+    }
+
+    private void jedi() {
+        rxGraphQl
+
+                .query(
+                        "Hero($episode: Episode, $withFriends: Boolean!) {" +
+                                "  hero(episode: $episode) {" +
+                                "    name" +
+                                "    friends @include(if: $withFriends) {" +
+                                "      name" +
+                                "    }" +
+                                "  }"
+                )
+
+
+                .variable("episode", "JEDI")
+                .variable("withFriends", false)
+
+                .cast(WeatherForecastResponse.class)
+
+                .toSingle()
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         data -> textView.setText(data.toString()),
                         throwable -> textView.setText(throwable.getLocalizedMessage())

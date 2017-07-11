@@ -20,6 +20,7 @@ public abstract class AbstractQuery<T> {
     private final RxGraphQl rxGraphQl;
 
     private final List<Field> fields = new ArrayList<>();
+    private final List<Variable> variables = new ArrayList<>();
 
     private Class<T> classToCast = null;
     private boolean toList = false;
@@ -105,5 +106,9 @@ public abstract class AbstractQuery<T> {
                 );
             }
         });
+    }
+
+    public void addVariable(String key, Object value) {
+        variables.add(new Variable(key, value));
     }
 }

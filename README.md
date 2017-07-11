@@ -23,30 +23,29 @@ RxGraphQl rxGraphQl = new RxGraphQl.Builder()
 # Query
 
 ```java
-rxGraphQl.query(
-                "weatherForecast(city:@city) {" +
-                        "city {" +
-                        "      id," +
-                        "      population," +
-                        "      name," +
-                        "      country," +
-                        "      coord{" +
-                        "        lon," +
-                        "        lat" +
-                        "      }" +
-                        "   }" +
-                        "}"
-        )
-        
-        .cast(WeatherForecastResponse.class) //auto convert response to WeatherForecastResponse
-        .field("city", "Seattle") //inject "Seatle" in place of @city
-        
-        .toSingle()
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(
-                data -> /* play with the fetched WeatherForecastResponse */,
-                throwable -> /* handle error */
-        );
+rxGraphQl
+         .query(
+                 "Hero($episode: Episode, $withFriends: Boolean!) {" +
+                         "  hero(episode: $episode) {" +
+                         "    name" +
+                         "    friends @include(if: $withFriends) {" +
+                         "      name" +
+                         "    }" +
+                         "  }"
+         )
+
+
+         .variable("episode", "JEDI")
+         .variable("withFriends", false)
+
+         .cast(WeatherForecastResponse.class)
+         
+         .toSingle()
+         .observeOn(AndroidSchedulers.mainThread())
+         .subscribe(
+                 data -> textView.setText(data.toString()),
+                 throwable -> textView.setText(throwable.getLocalizedMessage())
+         );
 ```
 
 

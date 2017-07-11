@@ -27,4 +27,9 @@ public class Query<T> extends AbstractQuery<T> {
         super.injectField(name, value);
         return this;
     }
+
+    public Query<T> variable(String key, Object value) {
+        super.addVariable(key, value);
+        return this;
+    }
 }
