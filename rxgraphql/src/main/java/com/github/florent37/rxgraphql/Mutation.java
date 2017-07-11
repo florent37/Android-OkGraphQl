@@ -26,4 +26,9 @@ public class Mutation<T> extends AbstractQuery<T> {
         super.injectField(name, value);
         return this;
     }
+
+    public Mutation<T> variable(String key, Object value) {
+        super.addVariable(key, value);
+        return this;
+    }
 }
