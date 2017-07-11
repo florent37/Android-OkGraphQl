@@ -1,6 +1,8 @@
 # RxGraphQl
 
-#Download
+Reactive GraphQl client for Android Edit
+
+# Download
 
 In your module [![Download](https://api.bintray.com/packages/florent37/maven/RxGraphQl/images/download.svg)](https://bintray.com/florent37/maven/RxGraphQl/_latestVersion)
 ```groovy
