@@ -39,7 +39,7 @@ rxGraphQl.query(
         )
         
         .cast(WeatherForecastResponse.class) //auto convert response to WeatherForecastResponse
-        .field("city", "Seattle")
+        .field("city", "Seattle") //inject "Seatle" in place of @city
         
         .toSingle()
         .observeOn(AndroidSchedulers.mainThread())
