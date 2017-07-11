@@ -12,7 +12,7 @@ compile 'com.github.florent37:rxgraphql:0.0.1'
 
 # Create your RxGraphQl
 
-```
+```java
 RxGraphQl rxGraphQl = new RxGraphQl.Builder()
                 .okClient(okHttpClient)
                 .baseUrl("http://192.168.1.16:8888/graphql")
@@ -22,7 +22,7 @@ RxGraphQl rxGraphQl = new RxGraphQl.Builder()
 
 # Query
 
-```
+```java
 rxGraphQl.query(
                 "weatherForecast(city:@city) {" +
                         "city {" +
