@@ -57,9 +57,31 @@ public abstract class AbstractQuery<T> {
                     .append("}")
                     .append("\"")
                     .append(",")
-                    .append("\"variables\":")
-                    .append("null")
-                    .append("}");
+                    .append("\"variables\":");
+            if(variables.isEmpty()){
+                content.append("null");
+            } else {
+                content.append("{");
+                final int size = variables.size();
+                for (int i = 0; i < size; i++) {
+                    final Variable variable = variables.get(i);
+                    content.append("\"").append(variable.name).append("\":");
+
+                    final Object value = variable.value;
+                    if(value == null){
+                        content.append("null");
+                    } else if(value instanceof Number || value instanceof Boolean){
+                        content.append(value.toString());
+                    } else {
+                        content.append("\"").append(value.toString()).append("\"");
+                    }
+                    if(i != size -1){
+                        content.append(",");
+                    }
+                }
+                content.append("}");
+            }
+            content.append("}");
         }
 
         String contentString = content.toString();
