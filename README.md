@@ -149,6 +149,14 @@ This example will generate the query :
 
 //TODO
 
+# Fragments 
+
+//TODO
+
+# Cache
+
+//TODO will use https://github.com/florent37/Android-NoSql
+
 # Credits
 
 Author: Florent Champigny [http://www.florentchampigny.com/](http://www.florentchampigny.com/)
