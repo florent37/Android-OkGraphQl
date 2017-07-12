@@ -37,6 +37,8 @@ OkGraphQl okGraphql = new OkGraphQl.Builder()
 
 # Usage
 
+**Please note that following examples have been tested on the StarWars GraphQl server : https://github.com/apollographql/starwars-server**
+
 Create your GraphQl query with `query(string)`, 
 then execute with `enqueue(SuccessCallback, ErrorCallback)`
 
