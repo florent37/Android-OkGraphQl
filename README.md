@@ -9,8 +9,12 @@ In your module [![Download](https://api.bintray.com/packages/florent37/maven/RxG
 compile 'com.github.florent37:okgraphql:0.0.1'
 ```
 
+# Creation
 
-# Create your RxGraphQl
+Create you OkGraphQl client with
+- The GraphQl sever url
+- An OkHttpClient (optional)
+- A converter (optional)
 
 ```java
 OkGraphQl okGraphql = new OkGraphQl.Builder()
@@ -22,11 +26,37 @@ OkGraphQl okGraphql = new OkGraphQl.Builder()
 
 # Usage
 
-Call the query then convert the json response to your model
+Create your GraphQl query with `query(string)`, 
+then execute with `enqueue(SuccessCallback, ErrorCallback)`
 
 ```
 okGraphql
+        .query("{" +
+                "  hero {" +
+                "    name" +
+                "  }" +
+                "}"
+        )
+        .enqueue(responseString -> {
+            //play with your responseString
+        }, error -> {
+            //display the error
+        });
+```
 
+You can also inflate a POJO with the returned Json using `.cast(CLASS)`
+This will use the `converter` assigned to your OkGraphQl
+
+```
+class Character {
+     String name;
+}
+   
+class StarWarsResponse {
+   Character hero;  
+}
+
+okGraphql
         .query("{" +
                 "  hero {" +
                 "    name" +
@@ -45,7 +75,7 @@ okGraphql
 
 # RxJava !
 
-you can also use RxJava instead of callbacks
+You can also use RxJava methods to your query using `.toSingle()`
 
 ```java
 okGraphql
