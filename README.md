@@ -3,7 +3,7 @@ A GraphQL service is created by defining types and fields on those types, then p
 
 Learn more at : http://graphql.org/learn/
 
-OkGraphQl is an Android client implementation, thinked to be easy to use, and completely modular
+OkGraphQl is an Android client implementation, thinked to be easy to use, fluent, and completely modular
 
 # Download
 
