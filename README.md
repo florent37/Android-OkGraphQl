@@ -39,6 +39,7 @@ OkGraphQl okGraphql = new OkGraphQl.Builder()
 
 Create your GraphQl query with `query(string)`, 
 then execute with `enqueue(SuccessCallback, ErrorCallback)`
+
 By default the success response is the Json (as String)
 
 ```
