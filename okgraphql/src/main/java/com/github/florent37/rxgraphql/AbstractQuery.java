@@ -96,7 +96,7 @@ public abstract class AbstractQuery<T> {
     void onResponse(Converter converter, String json) {
         if(String.class.equals(classToCast)){
             successCallback.onResponse((T)json);
-        } else {
+        } else { //convert only if cast != string
             final Converter.BodyConverter<T> objectBodyConverter = converter.bodyConverter();
             final T data = objectBodyConverter.convert(json, classToCast, toList);
             successCallback.onResponse(data);
