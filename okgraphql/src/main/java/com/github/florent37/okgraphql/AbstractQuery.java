@@ -1,9 +1,9 @@
-package com.github.florent37.rxgraphql;
+package com.github.florent37.okgraphql;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.github.florent37.rxgraphql.converter.Converter;
+import com.github.florent37.okgraphql.converter.Converter;
 import io.reactivex.Single;
 import io.reactivex.SingleEmitter;
 import io.reactivex.SingleOnSubscribe;

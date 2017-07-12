@@ -1,8 +1,10 @@
-package com.github.florent37.rxgraphql;
+package com.github.florent37.okgraphql;
 
 import java.io.IOException;
 
-import com.github.florent37.rxgraphql.converter.Converter;
+import com.github.florent37.okgraphql.converter.Converter;
+import com.github.florent37.okgraphql.converter.GsonConverter;
+
 import okhttp3.Call;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -18,7 +20,7 @@ public class OkGraphql {
     private String baseUrl;
 
     private OkHttpClient okHttpClient = new OkHttpClient();
-    private Converter converter;
+    private Converter converter = new GsonConverter();
 
     public Query<String> query(String query) {
         return new Query<>(this, query);

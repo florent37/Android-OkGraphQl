@@ -1,8 +1,6 @@
-package com.github.florent37.rxgraphql.converter;
+package com.github.florent37.okgraphql.converter;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;

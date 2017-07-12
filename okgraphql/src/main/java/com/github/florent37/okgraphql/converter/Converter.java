@@ -1,4 +1,4 @@
-package com.github.florent37.rxgraphql.converter;
+package com.github.florent37.okgraphql.converter;
 
 /**
  * Created by florentchampigny on 24/05/2017.

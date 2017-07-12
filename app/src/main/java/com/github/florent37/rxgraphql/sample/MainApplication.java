@@ -1,4 +1,4 @@
-package florent37.github.com.rxgraphql;
+package com.github.florent37.rxgraphql.sample;
 
 import android.app.Application;
 

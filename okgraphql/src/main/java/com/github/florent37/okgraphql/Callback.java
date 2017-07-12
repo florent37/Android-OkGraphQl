@@ -1,4 +1,4 @@
-package com.github.florent37.rxgraphql;
+package com.github.florent37.okgraphql;
 
 import io.reactivex.annotations.NonNull;
 

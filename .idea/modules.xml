@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/OkGraphQl.iml" filepath="$PROJECT_DIR$/OkGraphQl.iml" />
       <module fileurl="file://$PROJECT_DIR$/RxGraphQl.iml" filepath="$PROJECT_DIR$/RxGraphQl.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/okgraphql/okgraphql.iml" filepath="$PROJECT_DIR$/okgraphql/okgraphql.iml" />
       <module fileurl="file://$PROJECT_DIR$/okgraphql/okgraphql.iml" filepath="$PROJECT_DIR$/okgraphql/okgraphql.iml" />
     </modules>
   </component>

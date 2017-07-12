@@ -1,4 +1,4 @@
-package com.github.florent37.rxgraphql;
+package com.github.florent37.okgraphql;
 
 /**
  * Created by florentchampigny on 23/05/2017.

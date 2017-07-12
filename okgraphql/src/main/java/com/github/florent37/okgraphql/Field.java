@@ -1,4 +1,4 @@
-package com.github.florent37.rxgraphql;
+package com.github.florent37.okgraphql;
 
 import java.util.ArrayList;
 import java.util.List;

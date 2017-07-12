@@ -1,35 +1,35 @@
-package florent37.github.com.rxgraphql;
+package com.github.florent37.rxgraphql.sample;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
-import com.github.florent37.rxgraphql.OkGraphql;
-import com.github.florent37.rxgraphql.converter.GsonConverter;
+import com.github.florent37.okgraphql.OkGraphql;
+import com.github.florent37.okgraphql.converter.GsonConverter;
 import com.google.gson.Gson;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import florent37.github.com.rxgraphql.model.StarWarsResponse;
+import com.github.florent37.rxgraphql.sample.model.StarWarsResponse;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
-import static com.github.florent37.rxgraphql.Field.newField;
+import static com.github.florent37.okgraphql.Field.newField;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
-    @Bind(R.id.text1)
+    @Bind(florent37.github.com.rxgraphql.R.id.text1)
     TextView query_hero;
-    @Bind(R.id.text2)
+    @Bind(florent37.github.com.rxgraphql.R.id.text2)
     TextView query_hero_enqueue;
-    @Bind(R.id.text3)
+    @Bind(florent37.github.com.rxgraphql.R.id.text3)
     TextView query_variables_directives;
     private OkGraphql okGraphql;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(florent37.github.com.rxgraphql.R.layout.activity_main);
         ButterKnife.bind(this);
 
         this.okGraphql = new OkGraphql.Builder()
