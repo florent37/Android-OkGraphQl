@@ -50,7 +50,7 @@ okGraphql
 
 # Simple Callback
 
-You can use `.enqueue(SuccessCallback, ErrorCallback) if you don't like Rx :)
+You can use `.enqueue(SuccessCallback, ErrorCallback)`s if you don't like Rx :)
 
 ```
 okGraphql
