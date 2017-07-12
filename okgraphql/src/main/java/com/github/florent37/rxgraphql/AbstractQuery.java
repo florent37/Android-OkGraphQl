@@ -94,9 +94,13 @@ public abstract class AbstractQuery<T> {
     }
 
     void onResponse(Converter converter, String json) {
-        final Converter.BodyConverter<T> objectBodyConverter = converter.bodyConverter();
-        final T data = objectBodyConverter.convert(json, classToCast, toList);
-        successCallback.onResponse(data);
+        if(String.class.equals(classToCast)){
+            successCallback.onResponse((T)json);
+        } else {
+            final Converter.BodyConverter<T> objectBodyConverter = converter.bodyConverter();
+            final T data = objectBodyConverter.convert(json, classToCast, toList);
+            successCallback.onResponse(data);
+        }
     }
 
     void onError(Throwable throwable) {

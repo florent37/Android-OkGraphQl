@@ -59,7 +59,6 @@ okGraphql
                          "  }"
          )
 
-
          .variable("episode", "JEDI")
          .variable("withFriends", false)
 
