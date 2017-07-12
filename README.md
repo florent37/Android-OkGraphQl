@@ -20,7 +20,32 @@ OkGraphQl okGraphql = new OkGraphQl.Builder()
                 .build();
 ```
 
-# Query
+# Usage
+
+Call the query then convert the json response to your model
+
+```
+okGraphql
+
+        .query("{" +
+                "  hero {" +
+                "    name" +
+                "  }" +
+                "}"
+        )
+        
+        .cast(StarWarsResponse.class) //will automatically cast the data json to
+
+        .enqueue(response -> {
+            //play with your StarWarsResponse
+        }, error -> {
+            //display the error
+        });
+```
+
+# RxJava !
+
+you can also use RxJava instead of callbacks
 
 ```java
 okGraphql
@@ -48,28 +73,9 @@ okGraphql
          );
 ```
 
-# Simple Callback
-
-You can use `.enqueue(SuccessCallback, ErrorCallback)`s if you don't like Rx :)
-
-```
-okGraphql
-
-        .query("{" +
-                "  hero {" +
-                "    name" +
-                "  }" +
-                "}"
-        )
-
-        .enqueue(responseString -> {
-            textView.setText(responseString);
-        }, error -> {
-            textView.setText(error.getLocalizedMessage());
-        });
-```
-
 # Query Builder
+
+Use Fields Builders instead of Strings to create your query dynamically
 
 ```
 okGraphql
@@ -84,7 +90,7 @@ okGraphql
       ...
 ```
 
-will generate 
+This example will generate :
 
 ```
 {
