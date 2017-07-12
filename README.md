@@ -28,6 +28,7 @@ OkGraphQl okGraphql = new OkGraphQl.Builder()
 
 Create your GraphQl query with `query(string)`, 
 then execute with `enqueue(SuccessCallback, ErrorCallback)`
+By default the success response is the Json (as String)
 
 ```
 okGraphql
@@ -104,7 +105,7 @@ okGraphql
 
 # Query Builder
 
-Use Fields Builders instead of Strings to create your query dynamically
+Use Fields Builders instead of Strings to create dynamically your queries
 
 ```
 okGraphql
@@ -119,7 +120,7 @@ okGraphql
       ...
 ```
 
-This example will generate :
+This example will generate the query :
 
 ```
 {
@@ -129,6 +130,10 @@ This example will generate :
   }
 }
 ```
+
+# Mutations
+
+//TODO
 
 # Credits
 
