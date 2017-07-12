@@ -1,6 +1,9 @@
-# OkGraphQl
+GraphQL is a query language for your API, and a server-side runtime for executing queries by using a type system you define for your data. GraphQL isn't tied to any specific database or storage engine and is instead backed by your existing code and data.
+A GraphQL service is created by defining types and fields on those types, then providing functions for each field on each type.
 
-Reactive GraphQl client for Android
+Learn more at : http://graphql.org/learn/
+
+OkGraphQl is an Android client implementation, thinked to be easy to use, and completely modular
 
 # Download
 
@@ -14,13 +17,6 @@ compile 'com.squareup.okhttp3:okhttp:3.8.1'
 compile 'io.reactivex.rxjava2:rxjava:2.1.0'
 compile 'com.google.code.gson:gson:2.8.0'
 ```
-
-# GraphQl
-
-GraphQL is a query language for your API, and a server-side runtime for executing queries by using a type system you define for your data. GraphQL isn't tied to any specific database or storage engine and is instead backed by your existing code and data.
-A GraphQL service is created by defining types and fields on those types, then providing functions for each field on each type.
-
-Learn more at : http://graphql.org/learn/
 
 # Creation
 
