@@ -53,22 +53,20 @@ okGraphql
 You can use `.enqueue(SuccessCallback, ErrorCallback) if you don't like Rx :)
 
 ```
-private void query_hero_enqueue() {
-        okGraphql
+okGraphql
 
-                .query("{" +
-                        "  hero {" +
-                        "    name" +
-                        "  }" +
-                        "}"
-                )
+        .query("{" +
+                "  hero {" +
+                "    name" +
+                "  }" +
+                "}"
+        )
 
-                .enqueue(responseString -> {
-                    textView.setText(responseString);
-                }, error -> {
-                    textView.setText(error.getLocalizedMessage());
-                });
-    }
+        .enqueue(responseString -> {
+            textView.setText(responseString);
+        }, error -> {
+            textView.setText(error.getLocalizedMessage());
+        });
 ```
 
 # Query Builder
@@ -96,6 +94,7 @@ will generate
   }
 }
 ```
+
 # Credits
 
 Author: Florent Champigny [http://www.florentchampigny.com/](http://www.florentchampigny.com/)
