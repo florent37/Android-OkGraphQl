@@ -51,52 +51,52 @@ public abstract class AbstractQuery<T, QUERY extends AbstractQuery> {
     }
 
     public String getContent() {
-        final StringBuilder queryString = new StringBuilder();
-        final StringBuilder content = new StringBuilder();
+        final StringBuilder completeQuery = new StringBuilder();
+        final StringBuilder realQuery = new StringBuilder();
         {
-            queryString.append("{\"query\":")
+            completeQuery.append("{\"query\":")
                     .append("\"")
                     .append(prefix);
 
-            content.append(query);
+            realQuery.append(query);
 
             for (String fragment : fragments) {
-                content.append("\n")
+                realQuery.append("\n")
                         .append("fragment ")
                         .append(fragment);
             }
 
-            queryString.append("\"")
-                    .append(content)
+            completeQuery.append("\"")
+                    .append(realQuery)
                     .append(",")
                     .append("\"variableValues\":");
             if (variableValues.isEmpty()) {
-                queryString.append("null");
+                completeQuery.append("null");
             } else {
-                queryString.append("{");
+                completeQuery.append("{");
                 final int size = variableValues.size();
                 for (int i = 0; i < size; i++) {
                     final VariableValues variableValues = this.variableValues.get(i);
-                    queryString.append("\"").append(variableValues.name).append("\":");
+                    completeQuery.append("\"").append(variableValues.name).append("\":");
 
                     final Object value = variableValues.value;
                     if (value == null) {
-                        queryString.append("null");
+                        completeQuery.append("null");
                     } else if (value instanceof Number || value instanceof Boolean) {
-                        queryString.append(value.toString());
+                        completeQuery.append(value.toString());
                     } else {
-                        queryString.append("\"").append(value.toString()).append("\"");
+                        completeQuery.append("\"").append(value.toString()).append("\"");
                     }
                     if (i != size - 1) {
-                        queryString.append(",");
+                        completeQuery.append(",");
                     }
                 }
-                queryString.append("}");
+                completeQuery.append("}");
             }
-            queryString.append("}");
+            completeQuery.append("}");
         }
 
-        String contentString = queryString.toString();
+        String contentString = completeQuery.toString();
         for (FieldValue fieldValue : fieldValues) {
             contentString = contentString.replace("@" + fieldValue.name, "\\\"" + fieldValue.value + "\\\"");
         }
