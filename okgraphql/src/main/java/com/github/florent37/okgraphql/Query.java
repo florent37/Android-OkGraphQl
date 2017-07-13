@@ -9,7 +9,11 @@ import java.util.List;
 public class Query<T> extends AbstractQuery<T, Query<T>> {
 
     public Query(OkGraphql okGraphql, String query) {
-        super(okGraphql, "query", query);
+        this(okGraphql, "query", query);
+    }
+
+    public Query(OkGraphql okGraphql, String name, String query) {
+        super(okGraphql, name, query);
     }
 
     public <R> Query<R> cast(Class<R> theClass){

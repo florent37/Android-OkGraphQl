@@ -1,10 +1,10 @@
 package com.github.florent37.okgraphql;
 
-import java.io.IOException;
-
 import com.github.florent37.okgraphql.cache.Cache;
 import com.github.florent37.okgraphql.converter.Converter;
 import com.github.florent37.okgraphql.converter.GsonConverter;
+
+import java.io.IOException;
 
 import okhttp3.Call;
 import okhttp3.MediaType;
@@ -28,6 +28,10 @@ public class OkGraphql {
         return new Query<>(this, query);
     }
 
+    public Query<String> body(String query) {
+        return new Query<>(this, null, query);
+    }
+
     public Query<String> query(Field field) {
         final String query = field.toString();
         return new Query<>(this, query);
@@ -42,6 +46,8 @@ public class OkGraphql {
             okHttpClient.newCall(
                     new Request.Builder()
                             .url(baseUrl)
+                            .addHeader("accept", "application/json")
+                            .addHeader("content-type", "application/json")
                             .post(
                                     RequestBody.create(MediaType.parse("application/json"), abstractQuery.getContent())
                             )
@@ -58,7 +64,7 @@ public class OkGraphql {
                             abstractQuery.onError(e);
                         }
                     });
-        }catch (Exception e){
+        } catch (Exception e) {
             abstractQuery.onError(e);
         }
     }
@@ -81,7 +87,7 @@ public class OkGraphql {
         }
 
         @Deprecated
-        public Builder cache(Cache cache){
+        public Builder cache(Cache cache) {
             okGraphql.cache = cache;
             return this;
         }

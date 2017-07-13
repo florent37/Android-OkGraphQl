@@ -1,5 +1,9 @@
 package com.github.florent37.okgraphql;
 
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
+
 import com.github.florent37.okgraphql.converter.Converter;
 
 import java.util.ArrayList;
@@ -55,21 +59,24 @@ public abstract class AbstractQuery<T, QUERY extends AbstractQuery> {
         final StringBuilder realQuery = new StringBuilder();
         {
             completeQuery.append("{\"query\":")
-                    .append("\"")
-                    .append(prefix);
+                    .append("\"");
+
+            if (prefix != null) {
+                completeQuery.append(prefix).append(" ");
+            }
 
             realQuery.append(query);
 
             for (String fragment : fragments) {
-                realQuery.append("\n")
+                realQuery
                         .append("fragment ")
                         .append(fragment);
             }
 
-            completeQuery.append("\"")
-                    .append(realQuery)
+            completeQuery.append(realQuery)
+                    .append("\"")
                     .append(",")
-                    .append("\"variableValues\":");
+                    .append("\"variables\":");
             if (variableValues.isEmpty()) {
                 completeQuery.append("null");
             } else {
@@ -96,23 +103,40 @@ public abstract class AbstractQuery<T, QUERY extends AbstractQuery> {
             completeQuery.append("}");
         }
 
+        Log.d("query", realQuery.toString());
+
         String contentString = completeQuery.toString();
         for (FieldValue fieldValue : fieldValues) {
             contentString = contentString.replace("@" + fieldValue.name, "\\\"" + fieldValue.value + "\\\"");
         }
+
 
         return contentString;
 
     }
 
     void onResponse(Converter converter, String json) {
-        if (String.class.equals(classToCast)) {
-            successCallback.onResponse((T) json);
-        } else { //convert only if cast != string
-            final Converter.BodyConverter<T> objectBodyConverter = converter.bodyConverter();
-            final T data = objectBodyConverter.convert(json, classToCast, toList);
-            successCallback.onResponse(data);
+        final T converted;
+        try {
+            if (classToCast == null || String.class.equals(classToCast)) {
+                converted = (T) json;
+            } else { //convert only if cast != string
+                final Converter.BodyConverter<T> objectBodyConverter = converter.bodyConverter();
+                converted = objectBodyConverter.convert(json, classToCast, toList);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            errorCallback.onError(e);
+            return;
         }
+
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                successCallback.onResponse(converted);
+            }
+        });
+
     }
 
     void onError(Throwable throwable) {

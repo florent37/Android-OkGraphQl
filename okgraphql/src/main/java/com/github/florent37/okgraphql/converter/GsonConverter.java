@@ -31,7 +31,7 @@ public class GsonConverter implements Converter {
         }
 
         @Override
-        public T convert(String json, Class<T> classToCast, boolean toList) {
+        public T convert(String json, Class<T> classToCast, boolean toList) throws Exception {
             String dataJSon = null;
             try {
                 JSONObject toJson = new JSONObject(json);
@@ -44,7 +44,11 @@ public class GsonConverter implements Converter {
             if (toList) {
                 return null;
             } else {
-                return (T) gson.fromJson(dataJSon, classToCast);
+                try {
+                    return (T) gson.fromJson(dataJSon, classToCast);
+                } catch (Exception e){
+                    throw new ClassCastException(e.getLocalizedMessage());
+                }
             }
         }
 

@@ -156,7 +156,7 @@ Use `.fragment(code)` to append a fragment on your request
 ```
 okGraphql
 
-                .query("{" +
+                .body("{" +
                         "  leftComparison: hero(episode: EMPIRE) {" +
                         "    ...comparisonFields" +
                         "  }" +

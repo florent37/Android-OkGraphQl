@@ -9,7 +9,7 @@ import com.github.florent37.okgraphql.converter.GsonConverter;
 import com.github.florent37.rxgraphql.sample.model.StarWarsResponse;
 import com.google.gson.Gson;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
@@ -18,12 +18,14 @@ import static com.github.florent37.okgraphql.Field.newField;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
-    @Bind(R.id.text1)
-    TextView query_hero;
-    @Bind(R.id.text2)
-    TextView query_hero_enqueue;
-    @Bind(R.id.text3)
-    TextView query_variables_directives;
+
+    @BindView(R.id.text1)
+    TextView text1;
+    @BindView(R.id.text2)
+    TextView text2;
+    @BindView(R.id.text3)
+    TextView text3;
+
     private OkGraphql okGraphql;
 
     @Override
@@ -40,11 +42,11 @@ public class MainActivity extends AppCompatActivity {
 
         //query_hero();
         //query_hero_enqueue();
-        //query_variables_directives();
+        query_variables_directives();
 //
         //query_hero_built();
         //query_argument_built();
-        fragment();
+        //fragment(text3);
         //mutation();
     }
 
@@ -59,16 +61,16 @@ public class MainActivity extends AppCompatActivity {
                 )
 
                 .enqueue(responseString -> {
-                    query_hero_enqueue.setText(responseString);
+                    text1.setText(responseString);
                 }, error -> {
-                    query_hero_enqueue.setText(error.getLocalizedMessage());
+                    text1.setText(error.getLocalizedMessage());
                 });
     }
 
     private void fragment() {
         okGraphql
 
-                .query("{" +
+                .body("{" +
                         "  leftComparison: hero(episode: EMPIRE) {" +
                         "    ...comparisonFields" +
                         "  }" +
@@ -87,9 +89,9 @@ public class MainActivity extends AppCompatActivity {
                         "}")
 
                 .enqueue(responseString -> {
-                    query_hero_enqueue.setText(responseString);
+                    text1.setText(responseString);
                 }, error -> {
-                    query_hero_enqueue.setText(error.getLocalizedMessage());
+                    text1.setText(error.getLocalizedMessage());
                 });
     }
 
@@ -108,8 +110,8 @@ public class MainActivity extends AppCompatActivity {
                 .toSingle()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        dataString -> query_hero.setText(dataString),
-                        throwable -> query_hero.setText(throwable.getLocalizedMessage())
+                        dataString -> text1.setText(dataString),
+                        throwable -> text1.setText(throwable.getLocalizedMessage())
                 );
     }
 
@@ -126,8 +128,8 @@ public class MainActivity extends AppCompatActivity {
                 .toSingle()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        dataString -> query_hero.setText(dataString),
-                        throwable -> query_hero.setText(throwable.getLocalizedMessage())
+                        dataString -> text1.setText(dataString),
+                        throwable -> text1.setText(throwable.getLocalizedMessage())
                 );
     }
 
@@ -144,8 +146,8 @@ public class MainActivity extends AppCompatActivity {
                 .toSingle()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        dataString -> query_hero.setText(dataString),
-                        throwable -> query_hero.setText(throwable.getLocalizedMessage())
+                        dataString -> text1.setText(dataString),
+                        throwable -> text1.setText(throwable.getLocalizedMessage())
                 );
     }
 
@@ -171,8 +173,8 @@ public class MainActivity extends AppCompatActivity {
                 .toSingle()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        data -> query_variables_directives.setText(data.toString()),
-                        throwable -> query_variables_directives.setText(throwable.getLocalizedMessage())
+                        data -> text1.setText(data.toString()),
+                        throwable -> text1.setText(throwable.getLocalizedMessage())
                 );
     }
 }
