@@ -13,9 +13,11 @@ In your module
 ```groovy
 compile 'com.github.florent37:okgraphql:0.0.0'
 
+//dependencies
 compile 'com.squareup.okhttp3:okhttp:3.8.1'
 compile 'io.reactivex.rxjava2:rxjava:2.1.0'
 compile 'com.google.code.gson:gson:2.8.0'
+compile 'com.github.florent37:android-nosql:1.0.0'
 ```
 
 # Creation
@@ -149,7 +151,35 @@ This example will generate the query :
 
 # Fragments 
 
-//TODO
+Use `.fragment(code)` to append a fragment on your request
+
+```
+okGraphql
+
+                .query("{" +
+                        "  leftComparison: hero(episode: EMPIRE) {" +
+                        "    ...comparisonFields" +
+                        "  }" +
+                        "  rightComparison: hero(episode: JEDI) {" +
+                        "    ...comparisonFields" +
+                        "  }" +
+                        "}"
+                )
+
+                .fragment("comparisonFields on Character {" +
+                        "  name" +
+                        "  appearsIn" +
+                        "  friends {" +
+                        "    name" +
+                        "  }" +
+                        "}")
+
+                .enqueue(responseString -> {
+                    query_hero_enqueue.setText(responseString);
+                }, error -> {
+                    query_hero_enqueue.setText(error.getLocalizedMessage());
+                });
+```
 
 # Cache
 

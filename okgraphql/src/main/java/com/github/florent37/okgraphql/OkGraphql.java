@@ -2,6 +2,7 @@ package com.github.florent37.okgraphql;
 
 import java.io.IOException;
 
+import com.github.florent37.okgraphql.cache.Cache;
 import com.github.florent37.okgraphql.converter.Converter;
 import com.github.florent37.okgraphql.converter.GsonConverter;
 
@@ -21,6 +22,7 @@ public class OkGraphql {
 
     private OkHttpClient okHttpClient = new OkHttpClient();
     private Converter converter = new GsonConverter();
+    private Cache cache;
 
     public Query<String> query(String query) {
         return new Query<>(this, query);
@@ -75,6 +77,12 @@ public class OkGraphql {
 
         public Builder converter(Converter converter) {
             okGraphql.converter = converter;
+            return this;
+        }
+
+        @Deprecated
+        public Builder cache(Cache cache){
+            okGraphql.cache = cache;
             return this;
         }
 

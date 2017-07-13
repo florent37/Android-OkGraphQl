@@ -1,9 +1,10 @@
 package com.github.florent37.okgraphql;
 
+import com.github.florent37.okgraphql.converter.Converter;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import com.github.florent37.okgraphql.converter.Converter;
 import io.reactivex.Single;
 import io.reactivex.SingleEmitter;
 import io.reactivex.SingleOnSubscribe;
@@ -13,7 +14,7 @@ import io.reactivex.annotations.NonNull;
  * Created by florentchampigny on 23/05/2017.
  */
 
-public abstract class AbstractQuery<T> {
+public abstract class AbstractQuery<T, QUERY extends AbstractQuery> {
 
     private final String query;
     private final String prefix;
@@ -21,6 +22,7 @@ public abstract class AbstractQuery<T> {
 
     private final List<FieldValue> fieldValues = new ArrayList<>();
     private final List<VariableValues> variableValues = new ArrayList<>();
+    private final List<String> fragments = new ArrayList<>();
 
     private Class<T> classToCast = null;
     private boolean toList = false;
@@ -38,8 +40,9 @@ public abstract class AbstractQuery<T> {
         this.classToCast = classToCast;
     }
 
-    protected void injectField(String name, String value) {
+    protected QUERY field(String name, String value) {
         fieldValues.add(new FieldValue(name, value));
+        return (QUERY) this;
     }
 
     protected void castClassList(Class classToCast) {
@@ -48,43 +51,52 @@ public abstract class AbstractQuery<T> {
     }
 
     public String getContent() {
+        final StringBuilder queryString = new StringBuilder();
         final StringBuilder content = new StringBuilder();
         {
-            content.append("{\"query\":")
+            queryString.append("{\"query\":")
                     .append("\"")
-                    .append(prefix).append(" { ")
-                    .append(query)
-                    .append("}")
-                    .append("\"")
+                    .append(prefix);
+
+            content.append(query);
+
+            for (String fragment : fragments) {
+                content.append("\n")
+                        .append("fragment ")
+                        .append(fragment);
+            }
+
+            queryString.append("\"")
+                    .append(content)
                     .append(",")
                     .append("\"variableValues\":");
-            if(variableValues.isEmpty()){
-                content.append("null");
+            if (variableValues.isEmpty()) {
+                queryString.append("null");
             } else {
-                content.append("{");
+                queryString.append("{");
                 final int size = variableValues.size();
                 for (int i = 0; i < size; i++) {
                     final VariableValues variableValues = this.variableValues.get(i);
-                    content.append("\"").append(variableValues.name).append("\":");
+                    queryString.append("\"").append(variableValues.name).append("\":");
 
                     final Object value = variableValues.value;
-                    if(value == null){
-                        content.append("null");
-                    } else if(value instanceof Number || value instanceof Boolean){
-                        content.append(value.toString());
+                    if (value == null) {
+                        queryString.append("null");
+                    } else if (value instanceof Number || value instanceof Boolean) {
+                        queryString.append(value.toString());
                     } else {
-                        content.append("\"").append(value.toString()).append("\"");
+                        queryString.append("\"").append(value.toString()).append("\"");
                     }
-                    if(i != size -1){
-                        content.append(",");
+                    if (i != size - 1) {
+                        queryString.append(",");
                     }
                 }
-                content.append("}");
+                queryString.append("}");
             }
-            content.append("}");
+            queryString.append("}");
         }
 
-        String contentString = content.toString();
+        String contentString = queryString.toString();
         for (FieldValue fieldValue : fieldValues) {
             contentString = contentString.replace("@" + fieldValue.name, "\\\"" + fieldValue.value + "\\\"");
         }
@@ -94,8 +106,8 @@ public abstract class AbstractQuery<T> {
     }
 
     void onResponse(Converter converter, String json) {
-        if(String.class.equals(classToCast)){
-            successCallback.onResponse((T)json);
+        if (String.class.equals(classToCast)) {
+            successCallback.onResponse((T) json);
         } else { //convert only if cast != string
             final Converter.BodyConverter<T> objectBodyConverter = converter.bodyConverter();
             final T data = objectBodyConverter.convert(json, classToCast, toList);
@@ -134,7 +146,13 @@ public abstract class AbstractQuery<T> {
         });
     }
 
-    public void addVariable(String key, Object value) {
+    public QUERY variable(String key, Object value) {
         variableValues.add(new VariableValues(key, value));
+        return (QUERY) this;
+    }
+
+    public QUERY fragment(String fragment) {
+        fragments.add(fragment);
+        return (QUERY) this;
     }
 }

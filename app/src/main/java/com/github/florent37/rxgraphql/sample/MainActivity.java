@@ -6,11 +6,11 @@ import android.widget.TextView;
 
 import com.github.florent37.okgraphql.OkGraphql;
 import com.github.florent37.okgraphql.converter.GsonConverter;
+import com.github.florent37.rxgraphql.sample.model.StarWarsResponse;
 import com.google.gson.Gson;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import com.github.florent37.rxgraphql.sample.model.StarWarsResponse;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
 import static com.github.florent37.okgraphql.Field.newField;
@@ -18,32 +18,33 @@ import static com.github.florent37.okgraphql.Field.newField;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
-    @Bind(florent37.github.com.rxgraphql.R.id.text1)
+    @Bind(R.id.text1)
     TextView query_hero;
-    @Bind(florent37.github.com.rxgraphql.R.id.text2)
+    @Bind(R.id.text2)
     TextView query_hero_enqueue;
-    @Bind(florent37.github.com.rxgraphql.R.id.text3)
+    @Bind(R.id.text3)
     TextView query_variables_directives;
     private OkGraphql okGraphql;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(florent37.github.com.rxgraphql.R.layout.activity_main);
+        setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
         this.okGraphql = new OkGraphql.Builder()
                 .okClient(((MainApplication) getApplication()).getOkHttpClient())
-                .baseUrl("http://192.168.1.16:8888/graphql")
+                .baseUrl("http://10.0.0.4:8080/graphql")
                 .converter(new GsonConverter(new Gson()))
                 .build();
 
-        query_hero();
-        query_hero_enqueue();
-        query_variables_directives();
-
-        query_hero_built();
-        query_argument_built();
+        //query_hero();
+        //query_hero_enqueue();
+        //query_variables_directives();
+//
+        //query_hero_built();
+        //query_argument_built();
+        fragment();
         //mutation();
     }
 
@@ -56,6 +57,34 @@ public class MainActivity extends AppCompatActivity {
                         "  }" +
                         "}"
                 )
+
+                .enqueue(responseString -> {
+                    query_hero_enqueue.setText(responseString);
+                }, error -> {
+                    query_hero_enqueue.setText(error.getLocalizedMessage());
+                });
+    }
+
+    private void fragment() {
+        okGraphql
+
+                .query("{" +
+                        "  leftComparison: hero(episode: EMPIRE) {" +
+                        "    ...comparisonFields" +
+                        "  }" +
+                        "  rightComparison: hero(episode: JEDI) {" +
+                        "    ...comparisonFields" +
+                        "  }" +
+                        "}"
+                )
+
+                .fragment("comparisonFields on Character {" +
+                        "  name" +
+                        "  appearsIn" +
+                        "  friends {" +
+                        "    name" +
+                        "  }" +
+                        "}")
 
                 .enqueue(responseString -> {
                     query_hero_enqueue.setText(responseString);
