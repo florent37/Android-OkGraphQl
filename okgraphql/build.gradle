@@ -22,7 +22,7 @@ dependencies {
 
 ext {
     bintrayRepo = 'maven'
-    bintrayName = 'ExpectAnim'
+    bintrayName = 'OkGraphQl'
     orgName = 'florent37'
 
     publishedGroupId = 'com.github.florent37'
