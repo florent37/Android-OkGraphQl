@@ -9,7 +9,7 @@ OkGraphQl is an Android client implementation, thinked to be easy to use, fluent
 
 In your module 
 
-[![Download](https://api.bintray.com/packages/florent37/maven/RxGraphQl/images/download.svg)](https://bintray.com/florent37/maven/RxGraphQl/_latestVersion)
+[![Download](https://api.bintray.com/packages/florent37/maven/OkGraphQl/images/download.svg)](https://bintray.com/florent37/maven/OkGraphQl/_latestVersion)
 ```groovy
 compile 'com.github.florent37:okgraphql:0.0.0'
 
