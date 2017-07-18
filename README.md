@@ -44,7 +44,7 @@ then execute with `enqueue(SuccessCallback, ErrorCallback)`
 
 By default the success response is the Json (as String)
 
-```
+```java
 okGraphql
         .query("{" +
                 "  hero {" +
@@ -62,7 +62,7 @@ okGraphql
 You can also inflate a POJO with the returned Json using `.cast(CLASS)`
 This will use the `converter` assigned to your OkGraphQl
 
-```
+```java
 class Character {
      String name;
 }
@@ -121,7 +121,7 @@ okGraphql
 
 Use Fields Builders instead of Strings to create dynamically your queries
 
-```
+```java
 okGraphql
 
       .query(newField()
@@ -147,13 +147,30 @@ This example will generate the query :
 
 # Mutations
 
-//TODO
+Mutations are easy to execute with OkGraphQl
+
+```java
+ okGraphql
+          .mutation("CreateReviewForEpisode($ep: Episode!, $review: ReviewInput!) {" +
+                  "  createReview(episode: $ep, review: $review) {" +
+                  "    stars" +
+                  "    commentary" +
+                  "  }" +
+                  "}")
+          .variable("ep", "JEDI")
+          .variable("review", "{ \"stars\": 5, \"commentary\": \"This is a great movie!\"")
+          .enqueue(responseString -> {
+              text1.setText(responseString);
+          }, error -> {
+              text1.setText(error.getLocalizedMessage());
+          });
+```
 
 # Fragments 
 
 Use `.fragment(code)` to append a fragment on your request
 
-```
+```java
 okGraphql
 
                 .body("{" +

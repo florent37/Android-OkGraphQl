@@ -42,12 +42,29 @@ public class MainActivity extends AppCompatActivity {
 
         //query_hero();
         //query_hero_enqueue();
-        query_variables_directives();
-//
+        //query_variables_directives();
+
         //query_hero_built();
         //query_argument_built();
         //fragment(text3);
-        //mutation();
+        mutation();
+    }
+
+    private void mutation() {
+        okGraphql
+                .mutation("CreateReviewForEpisode($ep: Episode!, $review: ReviewInput!) {" +
+                        "  createReview(episode: $ep, review: $review) {" +
+                        "    stars" +
+                        "    commentary" +
+                        "  }" +
+                        "}")
+                .variable("ep", "JEDI")
+                .variable("review", "{ \"stars\": 5, \"commentary\": \"This is a great movie!\"")
+                .enqueue(responseString -> {
+                    text1.setText(responseString);
+                }, error -> {
+                    text1.setText(error.getLocalizedMessage());
+                });
     }
 
     private void query_hero_enqueue() {
