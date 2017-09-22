@@ -30,7 +30,7 @@ First, initialize you OkGraphQl client with
 - A converter (optional)
 
 ```java
-OkGraphQl okGraphql = new OkGraphQl.Builder()
+OkGraphql okGraphql = new OkGraphql.Builder()
                 .okClient(okHttpClient)
                 .baseUrl("http://192.168.1.16:8888/graphql")
                 .converter(new GsonConverter(new Gson()))
