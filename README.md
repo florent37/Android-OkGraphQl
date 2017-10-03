@@ -17,7 +17,7 @@ In your module
 
 [![Download](https://api.bintray.com/packages/florent37/maven/OkGraphQl/images/download.svg)](https://bintray.com/florent37/maven/OkGraphQl/_latestVersion)
 ```groovy
-compile 'com.github.florent37:okgraphql:0.0.0'
+compile 'com.github.florent37:okgraphql:0.0.1'
 
 //dependencies
 compile 'com.squareup.okhttp3:okhttp:3.8.1'
