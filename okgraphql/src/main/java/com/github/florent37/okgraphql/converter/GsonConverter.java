@@ -34,8 +34,12 @@ public class GsonConverter implements Converter {
         public T convert(String json, Class<T> classToCast, boolean toList) throws Exception {
             String dataJSon = null;
             try {
-                JSONObject toJson = new JSONObject(json);
-                JSONObject data = toJson.getJSONObject("data");
+                final JSONObject toJson = new JSONObject(json);
+                final JSONObject data = toJson.getJSONObject("data");
+                final JSONObject error = toJson.getJSONObject("error");
+                if(error != null){
+                    throw new ErrorBodyResponse(error);
+                }
                 dataJSon = data.toString();
             } catch (JSONException e) {
                 e.printStackTrace();
