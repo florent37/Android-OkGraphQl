@@ -110,6 +110,9 @@ public abstract class AbstractQuery<T, QUERY extends AbstractQuery> {
             contentString = contentString.replace("@" + fieldValue.name, "\\\"" + fieldValue.value + "\\\"");
         }
 
+        while(contentString.contains("\\\\")) {
+            contentString = contentString.replace("\\\\", "\\");
+        }
 
         return contentString;
 

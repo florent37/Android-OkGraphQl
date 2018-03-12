@@ -18,12 +18,12 @@ In your module
 
 [![Download](https://api.bintray.com/packages/florent37/maven/OkGraphQl/images/download.svg)](https://bintray.com/florent37/maven/OkGraphQl/_latestVersion)
 ```groovy
-compile 'com.github.florent37:okgraphql:0.0.1'
+compile 'com.github.florent37:okgraphql:(last version)'
 
 //dependencies
-compile 'com.squareup.okhttp3:okhttp:3.8.1'
-compile 'io.reactivex.rxjava2:rxjava:2.1.0'
-compile 'com.google.code.gson:gson:2.8.0'
+compile 'io.reactivex.rxjava2:rxjava:2.1.9'
+compile 'com.squareup.okhttp3:okhttp:3.9.1'
+compile 'com.google.code.gson:gson:2.8.2'
 compile 'com.github.florent37:android-nosql:1.0.0'
 ```
 
